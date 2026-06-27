@@ -227,7 +227,6 @@ GITHUB_CLI/
 │
 ├── index.js
 ├── README.md
-└── package.json
 ```
 
 ---
