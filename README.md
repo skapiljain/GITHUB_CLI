@@ -294,3 +294,5 @@ Free to use for learning and educational purposes.
 ---
 
 ⭐ If you like the project, consider giving it a star.
+project url:
+https://roadmap.sh/projects/github-trending-cli
