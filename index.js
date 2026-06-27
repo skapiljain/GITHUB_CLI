@@ -24,8 +24,9 @@ function getduration() {
 }
 function fetchdata(duration,limit) {
     const timeline = getConvertDuration(duration);
+    const limit1 = LimitHandling(limit);
     const url =
-        `https://api.github.com/search/repositories?q=created:>${timeline}&sort=stars&order=desc&per_page=${limit}`;
+        `https://api.github.com/search/repositories?q=created:>${timeline}&sort=stars&order=desc&per_page=${limit1}`;
         
     fetch(url)
         .then(res => {
@@ -42,7 +43,7 @@ function fetchdata(duration,limit) {
                 return;
             }
             if(!data.items.length){
-                console.log("EMPTY FEILD",data);
+                console.log("EMPTY FIELD",data);
                 return;
             }
             console.log("GITHUB_REPO:",data.items.length);
@@ -50,7 +51,12 @@ function fetchdata(duration,limit) {
             data.items.forEach(repo => {
     console.log(count+".");
    console.log("NAME:"+repo.name);
-   console.log("Description:"+repo.description );
+   if(!repo.description){
+    console.log("Description:"+"NULL");
+   }else{
+       console.log("Description:"+repo.description );
+   }
+
    console.log("Stars:"+repo.stargazers_count );
    console.log("Langauge:"+repo.language);
    count++;
@@ -75,6 +81,20 @@ function getConvertDuration(duration){
     today.setDate(today.getDate() - day);
 
     return today.toISOString().split("T")[0];
+}
+function LimitHandling(limit){
+        const Limit = parseInt(limit, 10);
+
+    if (isNaN(Limit)) {
+        throw new Error("Limit must be an integer");
+    }
+
+    if (Limit <= 0) {
+        throw new Error("Limit must be greater than 0");
+    }
+
+    return Limit;
+
 }
 const user = getduration()
 console.log(user);
